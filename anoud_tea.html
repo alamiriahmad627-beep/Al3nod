@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شاي عنود - Anoud Tea</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f9f0 100%);
+            color: #2d5a2d;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #2d6a2d 0%, #4a8f4a 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 15px rgba(45, 90, 45, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tea-cup {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        .leaf-shape {
+            width: 50px;
+            height: 35px;
+            background: linear-gradient(135deg, #4a8f4a 0%, #2d6a2d 50%, #4a8f4a 100%);
+            border-radius: 0 100% 0 100%;
+            position: relative;
+            transform: rotate(-45deg);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .leaf-vein {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-50%);
+        }
+
+        .leaf-vein::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: -8px;
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-50%);
+        }
+
+        .leaf-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cart-icon:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-shopping-bag {
+            width: 28px;
+            height: 32px;
+            position: relative;
+        }
+
+        .bag-body {
+            width: 28px;
+            height: 24px;
+            background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 100%);
+            border-radius: 0 0 8px 8px;
+            border: 2px solid #ffffff;
+            position: relative;
+        }
+
+        .bag-handles {
+            position: absolute;
+            top: -8px;
+            left: 6px;
+            width: 16px;
+            height: 12px;
+            border: 2px solid #ffffff;
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            background: transparent;
+        }
+
+        .bag-items {
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #4a8f4a;
+            font-size: 12px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(135deg, #ff4444 0%, #cc3333 100%);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+            border: 2px solid white;
+            box-shadow: 0 4px 8px rgba(255, 68, 68, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 2px solid #e8f5e8;
+        }
+
+        .welcome-section h1 {
+            color: #2d6a2d;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Products Grid */
+        .products-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #2d6a2d;
+            font-size: 32px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #e8f5e8;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: #4a8f4a;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(145deg, #f0f9f0 0%, #e8f5e8 30%, #f0f9f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a8f4a;
+            font-size: 72px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid #e8f5e8;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(74, 143, 74, 0.1) 0%, transparent 50%);
+        }
+
+        .product-image i {
+            filter: drop-shadow(0 4px 8px rgba(74, 143, 74, 0.2));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2d6a2d;
+            margin-bottom: 12px;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 26px;
+            font-weight: bold;
+            color: #2d6a2d;
+            margin-bottom: 20px;
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, #2d6a2d 0%, #4a8f4a 50%, #2d6a2d 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(45, 106, 45, 0.2);
+        }
+
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .add-to-cart-btn:hover::before {
+            left: 100%;
+        }
+
+        .add-to-cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(45, 106, 45, 0.4);
+            background: linear-gradient(135deg, #4a8f4a 0%, #2d6a2d 50%, #4a8f4a 100%);
+        }
+
+        .add-to-cart-btn:active {
+            transform: translateY(0px);
+            box-shadow: 0 4px 15px rgba(45, 106, 45, 0.3);
+        }
+
+        /* Cart Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .cart-item:hover {
+            background: #f9f9f9;
+        }
+
+        .cart-item-info h4 {
+            color: #2d6a2d;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background: #4a8f4a;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #2d6a2d;
+            transform: scale(1.1);
+        }
+
+        .quantity-display {
+            font-weight: bold;
+            font-size: 16px;
+            color: #2d6a2d;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+
+        .cart-total {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2d6a2d;
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 100%);
+            border-radius: 10px;
+            border: 2px solid #4a8f4a;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 2px solid #e8f5e8;
+        }
+
+        .contact-section h2 {
+            color: #2d6a2d;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .contact-section p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        .whatsapp {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+        }
+
+        .instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .whatsapp:hover {
+            background: linear-gradient(135deg, #128c7e 0%, #25d366 100%);
+        }
+
+        .instagram:hover {
+            background: linear-gradient(45deg, #bc1888 0%, #cc2366 25%, #dc2743 50%, #e6683c 75%, #f09433 100%);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #666;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-state i {
+            font-size: 80px;
+            color: #4a8f4a;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            color: #2d6a2d;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .welcome-section {
+                padding: 25px;
+            }
+
+            .welcome-section h1 {
+                font-size: 28px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                max-width: 90%;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .cart-item-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="tea-cup">
+                    <div class="leaf-shape">
+                        <div class="leaf-vein"></div>
+                        <div class="leaf-text">عنود</div>
+                    </div>
+                </div>
+                <div class="site-title">شاي عنود</div>
+            </div>
+            <div class="nav-buttons">
+                <div class="cart-icon" onclick="openCart()">
+                    <div class="cart-shopping-bag">
+                        <div class="bag-handles"></div>
+                        <div class="bag-body">
+                            <div class="bag-items">🍃</div>
+                        </div>
+                    </div>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>مرحباً بكم في شاي عنود</h1>
+            <p>نحن نقدم لكم أجود أنواع الشاي المختارة بعناية من أفضل مصادرها الطبيعية. استمتعوا بتجربة تسوق مميزة ونكهات لا تُنسى. شاي عنود... طعم الأصالة في كل رشفة</p>
+        </div>
+
+        <!-- Products Section -->
+        <div class="products-section">
+            <h2 class="section-title">منتجاتنا المميزة</h2>
+            <div id="productsContainer">
+                <div class="empty-state">
+                    <i class="fas fa-leaf"></i>
+                    <h3>قريباً... منتجات شاي مميزة</h3>
+                    <p>نعمل على إضافة مجموعة متنوعة من أفضل أنواع الشاي لكم</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2><i class="fas fa-phone-alt"></i> تواصل معنا</h2>
+            <p>للطلبات والاستفسارات، نحن في خدمتكم على مدار الساعة</p>
+            <div class="contact-buttons">
+                <a href="https://wa.me/971501234567" class="contact-btn whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    واتساب
+                </a>
+                <a href="https://instagram.com/anoudtea" class="contact-btn instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    إنستغرام
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2><i class="fas fa-shopping-cart"></i> سلة المشتريات</h2>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">المجموع: 0.00 درهم إماراتي</div>
+            <button class="checkout-btn" onclick="proceedToPayment()">
+                <i class="fas fa-credit-card"></i>
+                إتمام الطلب والدفع
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Sample products data - in real implementation, this would come from your admin system
+        let products = [
+            {
+                id: 1,
+                name: "شاي أخضر طبيعي",
+                description: "شاي أخضر عضوي من أوراق طبيعية مختارة بعناية، غني بمضادات الأكسدة",
+                price: 25.00,
+                image: null
+            },
+            {
+                id: 2,
+                name: "شاي أحمر كلاسيكي",
+                description: "شاي أحمر تقليدي بطعم غني ولون ذهبي مميز",
+                price: 20.00,
+                image: null
+            },
+            {
+                id: 3,
+                name: "شاي بالنعناع",
+                description: "مزيج رائع من الشاي الأخضر وأوراق النعناع الطازجة",
+                price: 30.00,
+                image: null
+            }
+        ];
+
+        let cart = [];
+
+        // Cart functions
+        function addToCart(productIndex) {
+            const product = products[productIndex];
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCartDisplay();
+            
+            // Visual feedback with better animation
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check-circle"></i> تمت الإضافة بنجاح!';
+            button.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+            button.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = '';
+                button.style.transform = '';
+            }, 2000);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartDisplay();
+            renderCart();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartDisplay();
+                    renderCart();
+                }
+            }
+        }
+
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('cartCount');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Add animation to cart icon
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function openCart() {
+            renderCart();
+            document.getElementById('cartModal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalContainer = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 50px; color: #666;">
+                        <div style="font-size: 120px; margin-bottom: 25px;">
+                            🛍️
+                        </div>
+                        <h3 style="color: #2d6a2d; margin-bottom: 15px; font-size: 24px;">سلة التسوق فارغة</h3>
+                        <p style="color: #666; font-size: 16px; line-height: 1.6;">اكتشف مجموعتنا الرائعة من الشاي الطبيعي<br>واختر ما يناسب ذوقك المميز</p>
+                        <div style="margin-top: 20px;">
+                            <button onclick="closeCart()" style="background: #4a8f4a; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px;">تصفح المنتجات</button>
+                        </div>
+                    </div>
+                `;
+                cartTotalContainer.innerHTML = 'المجموع: 0.00 درهم إماراتي';
+                return;
+            }
+
+            const cartHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p style="color: #666;">${item.price.toFixed(2)} درهم إماراتي للقطعة الواحدة</p>
+                        <p style="color: #2d6a2d; font-weight: bold;">المجموع الفرعي: ${(item.price * item.quantity).toFixed(2)} درهم إماراتي</p>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                        <span class="quantity-display">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            cartItemsContainer.innerHTML = cartHTML;
+            cartTotalContainer.innerHTML = `المجموع النهائي: ${total.toFixed(2)} درهم إماراتي`;
+        }
+
+        function proceedToPayment() {
+            if (cart.length === 0) {
+                alert('السلة فارغة! يرجى إضافة منتجات أولاً');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orderDetails = cart.map(item => `• ${item.name} - الكمية: ${item.quantity} - السعر: ${(item.price * item.quantity).toFixed(2)} درهم`).join('\n');
+            
+            // إنشاء رسالة واتساب مفصلة
+            const whatsappMessage = `🍃 *طلب جديد من شاي عنود* 🍃
+
+📋 *تفاصيل الطلب:*
+${orderDetails}
+
+💰 *المجموع النهائي:* ${total.toFixed(2)} درهم إماراتي
+
+🙏 أرجو تأكيد الطلب وإرسال تفاصيل التوصيل، شكراً لكم.`;
+
+            const whatsappUrl = `https://wa.me/971501234567?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            // فتح واتساب في نافذة جديدة
+            window.open(whatsappUrl, '_blank');
+            
+            // إظهار رسالة تأكيد
+            alert(`تم إرسال طلبكم بنجاح! 🎉\n\nإجمالي الطلب: ${total.toFixed(2)} درهم إماراتي\n\nسيتم التواصل معكم قريباً لتأكيد الطلب وترتيب التوصيل.`);
+            
+            // تفريغ السلة بعد الطلب
+            cart = [];
+            updateCartDisplay();
+            closeCart();
+        }
+
+        // Render products function
+        function renderProducts() {
+            const container = document.getElementById('productsContainer');
+            
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-leaf"></i>
+                        <h3>قريباً... منتجات شاي مميزة</h3>
+                        <p>نعمل على إضافة مجموعة متنوعة من أفضل أنواع الشاي لكم</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const productsHTML = products.map((product, index) => `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${product.image ? 
+                            `<img src="${product.image}" alt="${product.name}">` : 
+                            `<i class="fas fa-leaf"></i>`
+                        }
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">${product.price.toFixed(2)} درهم إماراتي</div>
+                        <button class="add-to-cart-btn" onclick="addToCart(${index})">
+                            <i class="fas fa-shopping-cart"></i>
+                            إضافة إلى السلة
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `<div class="products-grid">${productsHTML}</div>`;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                closeCart();
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+            updateCartDisplay();
+        });
+
+        // Handle escape key to close modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeCart();
+            }
+        });
+    </script>
+</body>
+</html>
